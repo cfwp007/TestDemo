@@ -45,7 +45,11 @@ android {
         }
     }
 
+    buildFeatures {
+        dataBinding true
+        viewBinding true
 
+    }
 }
 
 dependencies {
@@ -54,10 +58,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.android.support:multidex:1.0.3'
+
+//    implementation 'com.android.databinding:compiler:4.0.0'
 
     //协程
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
@@ -121,8 +128,7 @@ dependencies {
     //BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
-    //一行代码实现 DataBinding
-    implementation 'com.hi-dhl:binding:1.0.7'
+
 
     // whatIf
     implementation "com.github.skydoves:whatif:1.0.9"

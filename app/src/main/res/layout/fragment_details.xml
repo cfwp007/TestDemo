@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.LiveDataFragment">
+    <TextView
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="29sp"
+        android:text="liveDataTest" />
+
+    <TextView
+        android:id="@+id/argstv"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="29sp"
+        android:text="1111111111111111" />
+
+    <TextView
+        android:id="@+id/detalesTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="1561470022"
+        android:textColor="@color/colorPrimary"
+        android:textSize="29sp" />
+
+
+    <TextView
+        android:id="@+id/mediatorlivedata"
+        android:gravity="center"
+        android:text="MediatorLiveData"
+        android:textSize="29sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/refresh"
+        android:text="点击刷新上方TextView值"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+
