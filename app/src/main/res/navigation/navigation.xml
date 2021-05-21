@@ -17,6 +17,14 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_blankFragment_to_shardflowFragment"
+            app:destination="@id/shardflowFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
 
     </fragment>
 
@@ -53,5 +61,11 @@
 
 
     </fragment>
+
+    <fragment
+        android:id="@+id/shardflowFragment"
+        android:name="com.xunixianshi.vrshow.testdemo.fragment.ShardflowFragment"
+        android:label="fragment_shardflow_layout"
+        tools:layout="@layout/fragment_shardflow_layout" />
 
 </navigation>

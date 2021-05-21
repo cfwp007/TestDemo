@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.weier.vrshow.ext.setNext
 import com.xunixianshi.vrshow.testdemo.MLog
-import com.xunixianshi.vrshow.testdemo.MyRepository
+import com.xunixianshi.vrshow.testdemo.repository.MyRepository
 import com.xunixianshi.vrshow.testdemo.obj.PersonLive
 import com.xunixianshi.vrshow.testdemo.obj.defaultObj
 import com.xunixianshi.vrshow.testdemo.utils.TimeUtils
@@ -128,7 +128,8 @@ class LiveDataViewModel @ViewModelInject constructor(private val dataSource : My
     val personLiveFlow :LiveData<List<PersonLive>> = stateFlow
         //每次原始流发出一个值时，返回一个流，该流切换到[transform]函数产生的新流。
         //  *当原始流发出新值时，由“ transform”块产生的先前流将被取消。
-        //通过 flow 的 flatMapLatest 扩展程序，您可以在多个 flow 之间切换。此代码与 LiveData.switchMap 版本几乎完全相同，唯一的区别是它返回 Flows，而不是 LiveDatas。
+        //通过 flow 的 flatMapLatest 扩展程序，您可以在多个 flow 之间切换。此代码与 LiveData.switchMap 版本几乎完全相同，
+        // 唯一的区别是它返回 Flows，而不是 LiveDatas。
         .flatMapLatest {
             personLiveFlow->
 

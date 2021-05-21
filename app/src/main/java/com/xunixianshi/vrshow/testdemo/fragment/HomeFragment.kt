@@ -8,25 +8,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.xunixianshi.vrshow.testdemo.R
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_blank.*
 
+@AndroidEntryPoint
+class HomeFragment : Fragment(R.layout.fragment_blank) {
 
-class HomeFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view =   inflater.inflate(R.layout.fragment_blank, container, false)
-
-        view.findViewById<TextView>(R.id.hello_home_fragment).setOnClickListener {
+        livedatademo.setOnClickListener {
 
             findNavController().navigate(
                 HomeFragmentDirections.actionBlankFragmentToDetailsFragment("张三")
-                .setPositon(20)
-                .setIsshow(true))
+                    .setPositon(20)
+                    .setIsshow(true))
         }
-        return view
+
+        shardflow.setOnClickListener {
+
+            findNavController().navigate(R.id.action_blankFragment_to_shardflowFragment)
+
+        }
+
     }
 
 
