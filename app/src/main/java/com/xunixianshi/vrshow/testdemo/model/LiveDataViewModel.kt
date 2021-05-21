@@ -1,5 +1,6 @@
 package com.xunixianshi.vrshow.testdemo.model
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.weier.vrshow.ext.setNext
@@ -180,6 +181,41 @@ class LiveDataViewModel @ViewModelInject constructor(private val dataSource : My
      }*/
 
 
+    private val _loading = MutableLiveData<Boolean>()
+
+    private val _demodata = MutableLiveData<Int>()
+    val demodata: LiveData<Int> = _demodata //流收集时修改此livedata,主线程中 可调用此参数更新UI
+
+    /**
+     * @method
+     * @description flow链式调用
+     * @date: 2021/5/21 16:02
+     * @author: wangp
+     * @param
+     * @return
+     */
+    fun getDemo(key: String) {
+        viewModelScope.launch {
+            flow {
+                Log.d("Flow", "Emit on ${Thread.currentThread().name}")
+                //此处可以添加网络请求操作
+                emit(11)
+            }.flowOn(Dispatchers.IO)
+                .onStart {
+                    _loading.value = true
+                    Log.d("Flow", "onStart on ${Thread.currentThread().name}")
+                }.onCompletion {
+                    _loading.value = false
+                    Log.d("Flow", "onComplete on ${Thread.currentThread().name}")
+                }.catch { ex ->
+                    ex.printStackTrace()
+//                    _toastMsg.setValue(ex.message)
+                }.collect {
+                    Log.d("Flow", "Collect on ${Thread.currentThread().name}")
+                    _demodata.setValue(it)
+                }
+        }
+    }
 
 }
 
