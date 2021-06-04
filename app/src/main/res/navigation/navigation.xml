@@ -25,6 +25,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             />
+        <action
+            android:id="@+id/action_blankFragment_to_scopedemofragment"
+            app:destination="@id/scopedemofragment" />
 
     </fragment>
 
@@ -67,5 +70,13 @@
         android:name="com.xunixianshi.vrshow.testdemo.fragment.ShardflowFragment"
         android:label="fragment_shardflow_layout"
         tools:layout="@layout/fragment_shardflow_layout" />
+    <fragment
+        android:id="@+id/scopedemofragment"
+        android:name="com.xunixianshi.vrshow.testdemo.fragment.ScopeDemoFragment"
+        tools:layout="@layout/shard_flow_demo_main"
+        android:label="shard_flow_demo_main"
+
+
+        />
 
 </navigation>

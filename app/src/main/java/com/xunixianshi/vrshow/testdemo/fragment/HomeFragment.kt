@@ -30,6 +30,11 @@ class HomeFragment : Fragment(R.layout.fragment_blank) {
             findNavController().navigate(R.id.action_blankFragment_to_shardflowFragment)
 
         }
+        shardflow_demo.setOnClickListener {
+
+            findNavController().navigate(R.id.action_blankFragment_to_scopedemofragment)
+        }
+
 
     }
 

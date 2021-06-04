@@ -24,4 +24,13 @@
         android:background="@drawable/button_press"
         android:text="@string/shardflow"
         style="@style/textmargin"/>
+
+    <TextView
+        android:id="@+id/shardflow_demo"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/button_press"
+        android:text="协程demo"
+        style="@style/textmargin"/>
 </LinearLayout>
