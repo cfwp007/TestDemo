@@ -3,6 +3,8 @@ package com.xunixianshi.vrshow.testdemo.http
 import com.xunixianshi.vrshow.testdemo.obj.PersonLive
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 /**
  * @ClassName:      ApiService$
@@ -13,7 +15,7 @@ import retrofit2.http.GET
  */
 interface ApiService {
     @GET("user")
-    suspend fun getUser(): Response<PersonLive>
+    suspend fun getUser(@QueryMap map: MutableMap<String,String>): Response<PersonLive>
 
 
     @GET("demo")

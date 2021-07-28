@@ -59,6 +59,10 @@ class LiveDataViewModel @ViewModelInject constructor(private val dataSource : My
 
     }
 
+
+
+   fun getPersonLive() = dataSource.dataSource
+
     val currentTimeTransformed = currentTime.switchMap {
         liveData {
             emit(timeStampToTime(it))

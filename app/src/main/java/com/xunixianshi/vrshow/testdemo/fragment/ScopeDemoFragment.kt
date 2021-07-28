@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.xunixianshi.vrshow.testdemo.BaseData
 import com.xunixianshi.vrshow.testdemo.MLog
 import com.xunixianshi.vrshow.testdemo.R
 import com.xunixianshi.vrshow.testdemo.model.ScopeDemoModel
+import com.xunixianshi.vrshow.testdemo.parse.ResultPaser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.shard_flow_demo_main.*
 import kotlinx.coroutines.*
@@ -27,6 +29,95 @@ class ScopeDemoFragment :Fragment(R.layout.shard_flow_demo_main){
     val ioScope = MainScope() + Dispatchers.IO
 
 
+    private var JSON = "{\n" +
+            "    \"result\":true,\n" +
+            "    \"code\":200,\n" +
+            "    \"message\":\"请求成功！\",\n" +
+            "    \"data\":{\n" +
+            "        \"list\":[\n" +
+            "            {\n" +
+            "                \"id\":138496,\n" +
+            "                \"code\":\"PN0001\",\n" +
+            "                \"type\":\"7\",\n" +
+            "                \"name\":\"单虚拟件组装\",\n" +
+            "                \"isbaremetaloper\":0,\n" +
+            "                \"childs\":[\n" +
+            "                    {\n" +
+            "                        \"id\":138496,\n" +
+            "                        \"code\":\"PN0001\",\n" +
+            "                        \"type\":\"7\",\n" +
+            "                        \"name\":\"单虚拟件组装\",\n" +
+            "                        \"isbaremetaloper\":0\n" +
+            "                    },\n" +
+            "                    {\n" +
+            "                        \"id\":138496,\n" +
+            "                        \"code\":\"PN0001\",\n" +
+            "                        \"type\":\"7\",\n" +
+            "                        \"name\":\"单虚拟件组装\",\n" +
+            "                        \"isbaremetaloper\":0\n" +
+            "                    }\n" +
+            "                ]\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\":138508,\n" +
+            "                \"code\":\"PN0002\",\n" +
+            "                \"type\":\"7\",\n" +
+            "                \"name\":\"单虚拟件裸机工序\",\n" +
+            "                \"isbaremetaloper\":1,\n" +
+            "                \"childs\":[\n" +
+            "\n" +
+            "                ]\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\":138557,\n" +
+            "                \"code\":\"PN0014\",\n" +
+            "                \"type\":\"1\",\n" +
+            "                \"name\":\"普通作业\",\n" +
+            "                \"isbaremetaloper\":0,\n" +
+            "                \"childs\":[\n" +
+            "\n" +
+            "                ]\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\":138558,\n" +
+            "                \"code\":\"PN0015\",\n" +
+            "                \"type\":\"1\",\n" +
+            "                \"name\":\"普通作业裸机\",\n" +
+            "                \"isbaremetaloper\":1,\n" +
+            "                \"childs\":[\n" +
+            "\n" +
+            "                ]\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\":138559,\n" +
+            "                \"code\":\"PN0016\",\n" +
+            "                \"type\":\"5\",\n" +
+            "                \"name\":\"卡板\",\n" +
+            "                \"isbaremetaloper\":1,\n" +
+            "                \"childs\":[\n" +
+            "\n" +
+            "                ]\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"id\":138560,\n" +
+            "                \"code\":\"PN0017\",\n" +
+            "                \"type\":\"5\",\n" +
+            "                \"name\":\"检验作业\",\n" +
+            "                \"isbaremetaloper\":0,\n" +
+            "                \"childs\":[\n" +
+            "\n" +
+            "                ]\n" +
+            "            }\n" +
+            "        ]\n" +
+            "    },\n" +
+            "    \"timespan\":{\n" +
+            "        \"start\":\"2021-06-30 16:37:38.231\",\n" +
+            "        \"stop\":\"2021-06-30 16:37:38.236\",\n" +
+            "        \"span\":6\n" +
+            "    },\n" +
+            "    \"cache\":false\n" +
+            "}"
+
     private val viewModel: ScopeDemoModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +129,21 @@ class ScopeDemoFragment :Fragment(R.layout.shard_flow_demo_main){
             test_demo.text = "333333333333333"
         }
         startcheckBoolean()
+
+
+       var mBaseData = ResultPaser.paserObject(JSON, BaseData::class.java)
+       var childs =  mBaseData.data.list[0].childs
+
+        childs.forEach {
+            MLog.d("name---------->" + it.name)
+
+        }
+
     }
 
     fun startcheckBoolean() = mainScope.launch {
         activity?.let {
-           var boolean =  checkBoolean(it,"demotest")
+           var boolean =  checkBoolean(it,"demotest","demotest11111111111111")
 
             MLog.d("checkBoolean------->$boolean")
         }
@@ -77,9 +178,12 @@ class ScopeDemoFragment :Fragment(R.layout.shard_flow_demo_main){
                MLog.d("doSomeWork 111--------------$result")
           }
       }
-
+    //vararg 可变数组 [数组:array]
     private suspend fun checkBoolean(context: Context,vararg permissions: String )= suspendCoroutine<Boolean> {
-        MLog.d("doSomeWork-------------->$permissions")
+
+        permissions.forEach {
+            MLog.d("doSomeWork-------------->$it")
+        }
         it.resume(true)
 
         

@@ -11,4 +11,4 @@ import android.content.LocusId
  */
 data class PersonLive(var id: Int, var name:String, var address:String)
 
-val defaultObj = PersonLive(1,"王五","上海")
+val defaultObj = PersonLive(1,"王久","上海")

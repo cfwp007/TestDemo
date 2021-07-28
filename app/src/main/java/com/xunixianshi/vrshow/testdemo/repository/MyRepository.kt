@@ -3,6 +3,7 @@ package com.xunixianshi.vrshow.testdemo.repository
 import androidx.annotation.AnyThread
 import androidx.lifecycle.*
 import com.xunixianshi.vrshow.testdemo.MLog
+import com.xunixianshi.vrshow.testdemo.http.Results
 import com.xunixianshi.vrshow.testdemo.obj.PersonLive
 import com.xunixianshi.vrshow.testdemo.obj.defaultObj
 import com.xunixianshi.vrshow.testdemo.remote.LivedataRemoteDataSource
@@ -73,9 +74,26 @@ class MyRepository @Inject constructor(livedataRemoteDataSource: LivedataRemoteD
         "New data from request #$counter"
     }
 
-    private var listCache  = CacheOnSuccess(onErrorFallback = { PersonLive(id = 0,name = "",address = "")}){
+    // 缓存细节 获取用户信息
+    private var listCache  = CacheOnSuccess(onErrorFallback = { PersonLive(id = 0,name = "张三",address = "深圳")}){
+
         livedataRemoteDataSource.getUserInfo()
     }
+
+    val dataSource  =  listCache::getOrAwait.asFlow()
+        .onStart {
+
+        }.map {
+            retult->
+            withContext(Dispatchers.Default) {
+
+                retult
+            }
+
+        }
+
+
+
 
     val cachedSuccess: CacheOnSuccess<Int> = CacheOnSuccess(onErrorFallback = { 3 }) {
             //这里可添加网络请求逻辑
@@ -87,7 +105,6 @@ class MyRepository @Inject constructor(livedataRemoteDataSource: LivedataRemoteD
 
     //此代码会创建一个新的 Flow ,该 flow 调用 getOrAwait 并将结果作为其第一个和唯一的值发出。
     private val customSortFlow = cachedSuccess::getOrAwait.asFlow()
-
     //如需探索 combine 运算符的工作方式，请修改 customSortFlow，在 onStart 中发出两次数据（需包含长时间延迟），
         //当某个观察器先于其他运算符进行监听时，将会发生转换 onStart
         //因此您可以在网络请求 flow 中使用它来发出 Loading 状态。如下所示：

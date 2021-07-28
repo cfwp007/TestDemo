@@ -3,6 +3,8 @@ package com.xunixianshi.vrshow.testdemo;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.tencent.mmkv.MMKV;
+
 import dagger.hilt.android.HiltAndroidApp;
 
 /**
@@ -19,5 +21,7 @@ public class MyApplications extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
+        String rootDir = MMKV.initialize(this);
+        MLog.d("mmkt-->" + rootDir);
     }
 }

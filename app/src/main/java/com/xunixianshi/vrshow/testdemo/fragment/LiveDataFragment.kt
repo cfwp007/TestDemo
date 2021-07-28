@@ -4,25 +4,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import com.tencent.mmkv.MMKV
 import com.weier.vrshow.ext.observe
 import com.xunixianshi.vrshow.testdemo.MLog
-
 import com.xunixianshi.vrshow.testdemo.R
 import com.xunixianshi.vrshow.testdemo.adapter.LiveDataAdapter
 import com.xunixianshi.vrshow.testdemo.model.LiveDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 /**
@@ -46,18 +42,25 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
 
     private val mAdapter by lazy { LiveDataAdapter() }
 
+    @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         argstv.text = "navArgs : \n name:" + name + " position : "  + position + " isshow :" + isshow
 
 
-        viewModel.currentTimeTransformed.observe(viewLifecycleOwner){
-            newText->  detalesTv.text = newText
+        viewModel.currentTimeTransformed.observe(viewLifecycleOwner){ newText->  detalesTv.text = newText
         }
 
+       lifecycleScope.launch {
+           viewModel.getPersonLive().collect{
 
-        observe(viewModel.cachedValue,this::setMediatorlivedata)
+               MLog.d("data--->" + it.name)
+
+           }
+       }
+
+        observe(viewModel.cachedValue, this::setMediatorlivedata)
 
         viewModel.startObserVer()
 
@@ -90,17 +93,69 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
 //            MLog.d("result--->$result")
 //        }
 
-        viewModel.flowdemo.observe(viewLifecycleOwner){
-            demo->
+        viewModel.flowdemo.observe(viewLifecycleOwner){ demo->
             flowDemo.text  = demo.toString()
         }
+
+        MMKV_Start()
+
+    }
+
+    fun MMKV_Start(){
+       var kv =  MMKV.defaultMMKV();
+        kv.encode("bool", true);
+        System.out.println("bool: " + kv.decodeBool("bool"));
+
+        kv.encode("int", Integer.MIN_VALUE);
+        System.out.println("int: " + kv.decodeInt("int"));
+
+        kv.encode("long", Long.MAX_VALUE);
+        System.out.println("long: " + kv.decodeLong("long"));
+
+        kv.encode("float", -3.14f);
+        System.out.println("float: " + kv.decodeFloat("float"));
+
+        kv.encode("double", Double.MIN_VALUE);
+        System.out.println("double: " + kv.decodeDouble("double"));
+
+        kv.encode("string", "Hello from mmkv");
+        System.out.println("string: " + kv.decodeString("string"));
+
+        val bytes = byteArrayOf('m'.toByte(), 'm'.toByte(), 'k'.toByte(), 'v'.toByte())
+        kv.encode("bytes", bytes);
+
+        System.out.println("bytes: " + kv.decodeBytes("bytes").toString())
+
+
+
+    }
+
+    fun MMKVDeleteOrSelect(){
+      var mmkv =   MMKV.defaultMMKV()
+        mmkv.removeValueForKey("bool")
+
+        mmkv.removeValuesForKeys(arrayOf("int", "long"))
+        System.out.println("allKeys: " + Arrays.toString(mmkv.allKeys()))
+
+        val hasBool: Boolean = mmkv.containsKey("bool") //查询
+
+
+        //多进程访问
+        val kv = MMKV.mmkvWithID("InterProcessKV", MMKV.MULTI_PROCESS_MODE)
+        kv.encode("bool", true)
+    }
+
+    fun cleanMMKV(){
+      var mmkv =   MMKV.defaultMMKV()
+//        mmkv.clearAll()
+        mmkv.removeValueForKey("bool")
+        mmkv.clearMemoryCache()
 
     }
 
 
 
-
-    private fun setMediatorlivedata(statusStr:String){
+    private fun setMediatorlivedata(statusStr: String){
         mediatorlivedata.text = statusStr
     }
 
