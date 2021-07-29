@@ -99,6 +99,8 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
 
         MMKV_Start()
 
+        MLog.d("test")
+
     }
 
     fun MMKV_Start(){
