@@ -1,2 +1,4 @@
 include ':app'
+include ':filelibs'
+include ':colorArtlibs'
 rootProject.name = "TestDemo"

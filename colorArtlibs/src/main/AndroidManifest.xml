@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xunixianshi.colorartlibs">
+    <application>
+        <activity android:name="com.xunixianshi.colorartlibs.demo.DetailsActivity"/>
+        <activity android:name="com.xunixianshi.colorartlibs.demo.ColorMainActivity"/>
+
+    </application>
+</manifest>
