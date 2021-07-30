@@ -31,11 +31,12 @@ class HomeFragment : Fragment(R.layout.fragment_blank) {
 
         }
         shardflow_demo.setOnClickListener {
-
             findNavController().navigate(R.id.action_blankFragment_to_scopedemofragment)
         }
 
-
+        html_demo.setOnClickListener {
+            findNavController().navigate(R.id.action_blankFragment_to_htmlDemoFragment)
+        }
     }
 
 
