@@ -146,6 +146,8 @@ dependencies {
 
     // whatIf
     implementation "com.github.skydoves:whatif:1.0.9"
+//    implementation 'com.android.support:percent:28.0.0'
+    implementation 'androidx.percentlayout:percentlayout:1.0.0'
 
 
 
