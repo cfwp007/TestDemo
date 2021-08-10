@@ -1,5 +1,8 @@
 package com.xunixianshi.vrshow.testdemo;
 
+import android.app.Application;
+import android.content.Context;
+
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
@@ -16,6 +19,7 @@ import dagger.hilt.android.HiltAndroidApp;
  */
 @HiltAndroidApp//初始化hilt
 public class MyApplications extends MultiDexApplication {
+    private static MyApplications baseApplication;
 
     @Override
     public void onCreate() {
@@ -23,5 +27,13 @@ public class MyApplications extends MultiDexApplication {
         MultiDex.install(this);
         String rootDir = MMKV.initialize(this);
         MLog.d("mmkt-->" + rootDir);
+        baseApplication = this;
     }
+    public static Context getContext(){
+        return  baseApplication.getContext();
+    }
+    public static Application getApplication(){
+        return  baseApplication;
+    }
+
 }

@@ -12,11 +12,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.hch.myutils.utils.FileUtil;
-import com.hch.myutils.utils.MLog;
-import com.hch.myutils.utils.SimpleSharedPreferences;
-import com.hch.myutils.utils.TimeUtil;
-import com.xunixianshi.filelibs.R;
+import com.xunixianshi.filelibs.MLog;
+import com.xunixianshi.filelibs.SimpleSharedPreferences;
 import com.xunixianshi.filelibs.parse.ResultPaser;
 
 import java.io.File;

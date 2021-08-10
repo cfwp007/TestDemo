@@ -1,5 +1,6 @@
 package com.xunixianshi.vrshow.testdemo.obj
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 /**

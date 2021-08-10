@@ -11,6 +11,7 @@ import com.xunixianshi.vrshow.testdemo.MLog
 import com.xunixianshi.vrshow.testdemo.R
 import com.xunixianshi.vrshow.testdemo.model.NetworkViewModle
 import com.xunixianshi.vrshow.testdemo.obj.PersonLive
+import com.xunixianshi.vrshow.testdemo.room.DBUser
 import com.xunixianshi.vrshow.testdemo.utils.Resource
 import com.xunixianshi.vrshow.testdemo.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,11 +44,16 @@ class NetWorlDemo : Fragment(R.layout.fragment_net_worl_demo) {
 
     }
 
-    fun getdata(data : Resource<List<PersonLive>>){
+    fun getdata(data : Resource<List<DBUser>>){
 
         when(data.status){
             Status.SUCCESS->{
-                MLog.d("data SUCCESS--->" + data.data.toString())
+                data.data?.let {
+                    it.forEach {
+                        MLog.d("data SUCCESS name---------->" + it.name)
+                    }
+
+                }
             }
             Status.LOADING->{
                 MLog.d("data LOADING--->")

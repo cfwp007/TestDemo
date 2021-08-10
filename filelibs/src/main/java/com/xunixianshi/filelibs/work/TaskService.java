@@ -38,35 +38,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.blankj.utilcode.util.FileUtils;
 import com.google.gson.reflect.TypeToken;
-import com.hch.myutils.utils.MLog;
-import com.hch.myutils.utils.SimpleSharedPreferences;
-import com.hch.myutils.utils.TimeUtil;
 import com.video.detect.utils.BitmapUtils;
-import com.video.detect.utils.DetectUtil;
 import com.xunixianshi.colorartlibs.ColorArt;
+import com.xunixianshi.filelibs.MLog;
 import com.xunixianshi.filelibs.ScannerSdk;
+import com.xunixianshi.filelibs.SimpleSharedPreferences;
 import com.xunixianshi.filelibs.parse.ResultPaser;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 import top.zibin.luban.OnRenameListener;
@@ -260,7 +245,7 @@ public class TaskService extends Service {
                 MLog.d("获取到数据，压缩完毕，开始更新数据源11111111111:" + imgname);
 
                 if (newPathstr.contains("localImg")){
-                    com.hch.myutils.utils.FileUtil.deldeteFileByPath(videoBean.getFirstImg());
+                    FileUtil.deldeteFileByPath(videoBean.getFirstImg());
                 }
 
                 videoBean.setFirstImg(newPathstr);

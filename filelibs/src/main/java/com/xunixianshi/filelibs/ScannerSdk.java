@@ -3,26 +3,14 @@ package com.xunixianshi.filelibs;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.telephony.PhoneStateListener;
-import android.telephony.SignalStrength;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
-import com.hch.myutils.interfaces.BatteryChangeListener;
-import com.hch.myutils.utils.MLog;
-import com.hch.myutils.utils.MobileUtil;
-import com.hch.myutils.utils.SimpleSharedPreferences;
-import com.hch.myutils.utils.WifiAdminUtil;
-import com.xunixianshi.filelibs.work.ACache;
 import com.xunixianshi.filelibs.work.BitMapUtils;
 import com.xunixianshi.filelibs.work.Config;
 import com.xunixianshi.filelibs.work.FileUtil;
 import com.xunixianshi.filelibs.work.TaskService;
-import com.xunixianshi.filelibs.work.ThreadUtilWork;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
@@ -96,7 +84,7 @@ public class ScannerSdk {
     */
     public void updataScannerImg(Context context, Bitmap bmp, String imgpath){
         String[] imgs  = imgpath.split("/");
-        com.hch.myutils.utils.FileUtil.deldeteFileByPath(imgpath);
+        FileUtil.deldeteFileByPath(imgpath);
         BitMapUtils.saveToSystemGallery(context, bmp, imgs[imgs.length-1]);
     }
 
