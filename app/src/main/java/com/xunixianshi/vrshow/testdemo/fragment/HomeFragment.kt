@@ -37,6 +37,10 @@ class HomeFragment : Fragment(R.layout.fragment_blank) {
         html_demo.setOnClickListener {
             findNavController().navigate(R.id.action_blankFragment_to_htmlDemoFragment)
         }
+
+        netdemo.setOnClickListener {
+            findNavController().navigate(R.id.action_blankFragment_to_netWorlDemo)
+        }
     }
 
 

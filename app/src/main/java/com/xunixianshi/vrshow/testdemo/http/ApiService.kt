@@ -20,4 +20,10 @@ interface ApiService {
 
     @GET("demo")
     suspend fun getDemo(): Response<List<PersonLive>>
+
+
+    @GET("users")
+    suspend fun getUsers(): List<PersonLive>
+
+
 }

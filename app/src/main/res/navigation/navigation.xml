@@ -32,6 +32,10 @@
             android:id="@+id/action_blankFragment_to_htmlDemoFragment"
             app:destination="@id/htmlDemoFragment" />
 
+        <action
+            android:id="@+id/action_blankFragment_to_netWorlDemo"
+            app:destination="@id/netWorlDemo" />
+
     </fragment>
 
     <fragment
@@ -86,5 +90,12 @@
         android:name="com.xunixianshi.vrshow.testdemo.HtmlDemoFragment"
         android:label="fragment_html_demo"
         tools:layout="@layout/fragment_html_demo" />
+
+    <fragment
+        android:id="@+id/netWorlDemo"
+        android:name="com.xunixianshi.vrshow.testdemo.fragment.NetWorlDemo"
+        android:label="fragment_net_worl_demo"
+        tools:layout="@layout/fragment_net_worl_demo" />
+
 
 </navigation>

@@ -16,7 +16,7 @@ class LiveDataAdapter :BaseQuickAdapter<PersonLive,BaseViewHolder>(R.layout.live
 
     override fun convert(holder: BaseViewHolder, item: PersonLive) {
         holder.setText(R.id.name,item.name)
-        holder.setText(R.id.address,item.address)
+        holder.setText(R.id.address,item.email)
 
     }
 }

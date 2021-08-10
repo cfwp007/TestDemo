@@ -75,7 +75,7 @@ class MyRepository @Inject constructor(livedataRemoteDataSource: LivedataRemoteD
     }
 
     // 缓存细节 获取用户信息
-    private var listCache  = CacheOnSuccess(onErrorFallback = { PersonLive(id = 0,name = "张三",address = "深圳")}){
+    private var listCache  = CacheOnSuccess(onErrorFallback = { PersonLive(1, "王久", "77777@qq.com","asqqw")}){
 
         livedataRemoteDataSource.getUserInfo()
     }
