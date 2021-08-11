@@ -6,11 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xunixianshi.vrshow.testdemo.MLog
-import com.xunixianshi.vrshow.testdemo.httpdemo.ApiHelperImpl
-import com.xunixianshi.vrshow.testdemo.obj.PersonLive
 import com.xunixianshi.vrshow.testdemo.room.DBUser
 import com.xunixianshi.vrshow.testdemo.room.DatabaseHelper
-import com.xunixianshi.vrshow.testdemo.room.DatabaseHelperImpl
 import com.xunixianshi.vrshow.testdemo.service.ServiceManager
 import com.xunixianshi.vrshow.testdemo.utils.Resource
 import kotlinx.coroutines.launch
