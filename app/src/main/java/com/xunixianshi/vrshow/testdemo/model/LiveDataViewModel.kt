@@ -70,6 +70,7 @@ class LiveDataViewModel @ViewModelInject constructor(private val dataSource : My
     }
 
 
+
     private suspend fun timeStampToTime(timestamp: Long): String {
         delay(500)  // Simulate long operation
         return TimeUtils.millis2String(timestamp)
@@ -96,12 +97,6 @@ class LiveDataViewModel @ViewModelInject constructor(private val dataSource : My
         //激活MediatorLiveData，observeForever全局监听（observe根据activity生命周期去监听）
         dataSource.cachedData.observeForever({})
     }
-
-
-
-
-
-
 
     fun stopObserVer(){
         dataSource.cachedData.removeSource(dataSource._cachedData)

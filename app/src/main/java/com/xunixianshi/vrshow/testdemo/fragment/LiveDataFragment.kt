@@ -2,6 +2,7 @@ package com.xunixianshi.vrshow.testdemo.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,12 +13,17 @@ import com.weier.vrshow.ext.observe
 import com.xunixianshi.vrshow.testdemo.MLog
 import com.xunixianshi.vrshow.testdemo.R
 import com.xunixianshi.vrshow.testdemo.adapter.LiveDataAdapter
+import com.xunixianshi.vrshow.testdemo.ext.getSharedPreferences
+import com.xunixianshi.vrshow.testdemo.ext.read
 import com.xunixianshi.vrshow.testdemo.model.LiveDataViewModel
+import com.xunixianshi.vrshow.testdemo.obj.PersonLive
+import com.xunixianshi.vrshow.testdemo.obj.TestPersen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 import java.util.*
 
 
@@ -42,13 +48,17 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
 
     private val mAdapter by lazy { LiveDataAdapter() }
 
+    private var testList = mutableListOf<TestPersen>()
+
     @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         argstv.text = "navArgs : \n name:" + name + " position : "  + position + " isshow :" + isshow
 
+        testList.add {
 
+        }
         viewModel.currentTimeTransformed.observe(viewLifecycleOwner){ newText->  detalesTv.text = newText
         }
 
@@ -100,6 +110,97 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
         MMKV_Start()
 
         MLog.d("test   ")
+
+//  高阶函数练习
+//        getSharedPreferences("demo",requireActivity()).open {
+//            putString("haha","张三--")
+//        }
+//
+//        getSharedPreferences("demo",requireActivity()).read {
+//            var string  = getString("haha","王五")
+//            MLog.d("preference--->$string")
+//        }
+        getSharedPreferences("demo",requireActivity()).edit {
+            putString("haha","张三--")
+        }
+
+        getSharedPreferences("demo",requireActivity()).read {
+            var string  = getString("haha","王五")
+            MLog.d("preference--->$string")
+        }
+
+        show(6) {
+            MLog.d("函数参数类型  :$it")
+        }
+        thread {
+            MLog.d("start thread-----")
+
+            test{
+                MLog.d("name---------->" + it.email)
+            }
+        }
+
+        printString("aaa"){
+            MLog.d("printString---------->$it")
+
+        }
+
+
+    }
+
+/*
+        //kotlin高阶函数
+
+//block1 无参数无返回值函数类型
+    val block1: () -> Unit
+    // block2 无参数返回值为 String 的函数类型
+    val block2: () -> String
+    // block2 有一个 Int 类型的参数无返回值的函数类型
+    val block3: (Int) -> Unit
+    // block4 有2个参数返回值为 String 的函数类型
+    val block4: (Int, String) -> String*/
+
+    fun test(test:(PersonLive)->Unit){
+        test(PersonLive(2,"aaa","上海","test"))
+    }
+
+
+
+    fun show(index:Int,block:(Int) ->Unit){
+        MLog.d("start---")
+
+        block(index)
+
+        MLog.d("end---")
+
+    }
+
+    fun thread(start: Boolean = true,
+               isDaemon: Boolean = false,
+               contextClassLoader: ClassLoader? = null,
+               name: String? = null,
+               priority: Int = -1,
+               block: () -> Unit
+    ) :Thread {
+
+        val thread = object :Thread(){
+            override fun run() {
+                 block()
+            }
+        }
+
+        if (isDaemon)
+            thread.isDaemon = true
+        if (priority > 0)
+            thread.priority = priority
+        if (name != null)
+            thread.name = name
+        if (contextClassLoader != null)
+            thread.contextClassLoader = contextClassLoader
+        if (start)
+            thread.start()
+
+        return thread
 
     }
 
@@ -155,6 +256,48 @@ class LiveDataFragment : Fragment(R.layout.fragment_details) {
 
     }
 
+
+    fun main() {
+        val num1 = 100
+        val num2 = 80
+        val result1 = num1AndNum2(num1, num2) { n1, n2 ->
+            n1 + n2
+        }
+        val result2 = num1AndNum2(num1, num2) { n1, n2 ->
+            n1 - n2
+        }
+        println("result1:$result1")
+        println("result2:$result2")
+
+
+    }
+
+    inline fun num1AndNum2(num1: Int, num2: Int, operation: (Int, Int) -> Int): Int {
+        val result = operation(num1, num2)
+        return result
+    }
+
+    inline fun printString(str:String,block: (String) ->Unit){
+        println("printString begain")
+
+        block(str)
+
+        println("printString end")
+    }
+
+    inline fun runRunnable(crossinline block: () -> Unit){
+        val runnable = Runnable{ //匿名类的实现 block: () -> Unit需添加 crossinline关键字:此关键字相当于契约他用于保证在内关联的
+                                // lambda表达式中一定不会使用return关键字,这样冲突就不存在了
+            block()
+        }
+        runnable.run()
+    }
+
+
+    fun StringBuilder.build(block: StringBuilder.() -> Unit):StringBuilder{
+        block()
+        return this
+    }
 
 
     private fun setMediatorlivedata(statusStr: String){

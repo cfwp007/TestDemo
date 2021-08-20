@@ -21,4 +21,6 @@ data class PersonLive(
     val avatar: String = ""
 )
 
+typealias TestPersen =  (PersonLive)->Unit
+
 val defaultObj = PersonLive(1, "王久", "77777@qq.com","asqqw")
